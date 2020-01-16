@@ -19,6 +19,7 @@ class StockList extends Component {
                     {this.props.tabRow(this.props.data)}
                     </tbody>
                 </table>
+                {this.props.children}
             </div>
         );
     }

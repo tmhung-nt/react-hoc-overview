@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import TableRow from "./TableRow";
 
+
 export default function Hoc(HocComponent, data){
+
     return class extends Component{
         constructor(props) {
             super(props);
             this.state = {
-                data: data
+                data: data,
+                inputValue: '',
             };
         }
 
@@ -18,9 +21,25 @@ export default function Hoc(HocComponent, data){
             }
         }
 
+        handleChange = e => {
+            this.setState({
+                [e.target.name]: e.target.value
+            });
+        }
+
+        showInputTextBox = () => {
+            return (
+                <input type="text" placeholder="input value here ..." value={this.state.inputValue}
+                    onChange={e => this.handleChange(e)} name="inputValue"
+                />
+            )
+        }
+
         render(){
             return (
-                <HocComponent data={this.state.data} {...this.props} tabRow={this.tabRow}/>
+                <HocComponent data={this.state.data} {...this.props} tabRow={this.tabRow}>
+                    {this.showInputTextBox()}
+                </HocComponent>
             );
         }
     }
