@@ -1,17 +1,8 @@
 import React, {Component} from 'react';
-import TableRow from './TableRow';
 
 class UserList extends Component {
     constructor(props) {
         super(props);
-    }
-
-    tabRow() {
-        if (this.props.data instanceof Array) {
-            return this.props.data.map(function (object, i) {
-                return <TableRow obj={object} key={i}/>;
-            })
-        }
     }
 
     render() {
@@ -25,7 +16,7 @@ class UserList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {this.tabRow()}
+                    {this.props.tabRow(this.props.data)}
                     </tbody>
                 </table>
             </div>
