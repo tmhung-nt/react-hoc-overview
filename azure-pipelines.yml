@@ -4,6 +4,10 @@
 trigger:
 - master
 
+
+variables:
+  reactBuild: '/build'
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -19,20 +23,12 @@ steps:
     npm run build
   displayName: 'npm install and build'
   
-## Copy the client to the staging directory
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    contents: 'build/**' 
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-    cleanTargetFolder: true
-
 ## Archive the files into a zip file for publishing
 - task: ArchiveFiles@2
   displayName: 'Archive Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
-    rootFolderOrFile: 'build/*'
-    includeRootFolder: true
+    rootFolderOrFile: '${reactBuild}'
+    includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/react_$(Build.BuildId).zip'
     replaceExistingArchive: true
