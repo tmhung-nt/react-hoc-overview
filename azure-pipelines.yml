@@ -6,7 +6,7 @@ trigger:
 
 
 variables:
-  reactBuild: '/build'
+  reactBuild: 'build'
 
 pool:
   vmImage: 'ubuntu-latest'
