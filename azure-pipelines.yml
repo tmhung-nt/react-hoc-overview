@@ -13,6 +13,12 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+## Run the npm install/build
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+  
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -26,9 +32,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
