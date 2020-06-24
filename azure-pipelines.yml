@@ -1,0 +1,42 @@
+# Node.js with React
+
+
+trigger:
+- master
+
+
+variables:
+  reactBuild: 'build'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+## Run the npm install/build
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+  
+## Archive the files into a zip file for publishing
+- task: ArchiveFiles@2
+  displayName: 'Archive Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    rootFolderOrFile: '$(reactBuild)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/react_$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
+## Publish the zip file
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Build to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'react_build'
+    publishLocation: 'Container'
