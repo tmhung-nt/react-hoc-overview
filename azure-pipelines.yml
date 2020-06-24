@@ -31,7 +31,7 @@ steps:
 - task: ArchiveFiles@2
   displayName: 'Archive Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    rootFolderOrFile: '$(Build.BinariesDirectory)/build'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/react_$(Build.BuildId).zip'
