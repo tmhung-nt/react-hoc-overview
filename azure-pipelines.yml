@@ -21,6 +21,7 @@ steps:
   
 ## Copy the client to the staging directory
 - task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     contents: 'build/**' 
     targetFolder: '$(Build.ArtifactStagingDirectory)'
@@ -28,6 +29,7 @@ steps:
 
 ## Archive the files into a zip file for publishing
 - task: ArchiveFiles@2
+  displayName: 'Archive Files to: $(Build.ArtifactStagingDirectory)'
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: true
@@ -37,6 +39,7 @@ steps:
 
 ## Publish the zip file
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Build to: $(Build.ArtifactStagingDirectory)'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'react_build'
