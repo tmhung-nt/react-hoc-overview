@@ -19,16 +19,26 @@ steps:
     npm run build
   displayName: 'npm install and build'
   
+## Copy the client to the staging directory
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: '$(buildOutputFolder)' 
+    contents: '**/*' 
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    cleanTargetFolder: true
+
+## Archive the files into a zip file for publishing
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)/build/'
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: true
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/react_$(Build.BuildId).zip'
     replaceExistingArchive: true
 
+## Publish the zip file
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    ArtifactName: 'react_build'
     publishLocation: 'Container'
